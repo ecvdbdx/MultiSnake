@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "A multiplayer Snake created by ECV Digitale Dev Master students.",
   "main": "index.html",
-  "dependencies": {},
+  "dependencies": {
+    "rollupify": "^0.3.5"
+  },
   "devDependencies": {
     "browserify": "^13.1.1",
     "rollupify": "^0.3.5",
