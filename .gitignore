@@ -1,0 +1,2 @@
+# Do not add the generated client side bundle.js
+client/assets/js/bundle.js

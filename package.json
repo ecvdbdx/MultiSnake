@@ -1,0 +1,25 @@
+{
+  "name": "multi-snake",
+  "version": "0.0.1",
+  "description": "A multiplayer Snake created by ECV Digitale Dev Master students.",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "rollupify": "^0.3.5",
+    "watchify": "^3.7.0"
+  },
+  "scripts": {
+    "bundle-client": "watchify client/assets/js/main.js -o client/assets/js/bundle.js -t rollupify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidBruant/MultiSnake.git"
+  },
+  "author": "ECVD Dev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidBruant/MultiSnake/issues"
+  },
+  "homepage": "https://github.com/DavidBruant/MultiSnake#readme"
+}
