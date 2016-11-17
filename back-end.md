@@ -2,41 +2,41 @@
 
 ## Stack :
 
-- Node.js (moteur JS)
-- Socket.io (websockets/tps réel)
-- Express (serveur)
+- Node.js (JS engine)
+- Socket.io (websockets/realtime)
+- Express (server)
 
-Pour le serveur, on utilise Node.js/Express
-Avantages :
-- Stack purement JS
-- Gestion des Sockets avec Socket.io
-- C'est fun
+We'll be using Node.js/Express for the server
+Pros :
+- Full JS down the line
+- Sockets handling with Socket.io
+- Fun
 
-Gestion de la synchro temps réel :
+Realtime sync handling :
 - Socket.io
 
-## Fonctionnement back :
+## Back-end functions overview :
 
-Nous devons gérer :
-- La connexion / déconnexion des utilisateurs
-- La synchronisation temps-réel
-- La génération des pommes et leur placement au fur et à mesure de la partie
+We must handle :
+- Users check-in and check-outs
+- Realtime sync
+- Apples creation and placement throughout the game.
 
-## Déroulé d'une session côté serveur :
+## Game session from a server-side perspective :
 
-Bootstrap de la session :
+Session bootstrap :
 
-- Placement des pommes
+- Apples placement
 
-Lors de l'arrivée d'un user, le serveur :
+As the user arrives, the server :
 
-- Envoie les assets et le code front
-- Attribut un UUID au client
-- Ouvre un socket avec le client
-- Capture les evts envoyés par le client et les broadcaste aux autres clients
+- Sends assets and code to the client
+- Gives the client a UUID
+- Opens a socket with the client
+- Catch events sent by the client and broadcasts them to others.
 
-Durant la session, le serveur stocke :
-- Les props du joueur : nombre de pommes mangées, l'UUID du joueur.
-- Le nombre de joueurs sur la session (avec un nombre limite global)
-- Le nombre et placement des pommes sur le tableau de jeu.
-- La longueur et le placement des serpents OU les cases du tableau de jeu non-occupées
+Throughout the session, the server stocks (real-time) :
+- Player's props : UUID, eated apples count
+- Global players count(with a max limit)
+- Count and placement of apples on the gameboard
+- Length and placement of all snakes OR free squares
