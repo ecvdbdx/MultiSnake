@@ -6,6 +6,12 @@ A multiplayer [Snake](https://en.wikipedia.org/wiki/Snake_(video_game)) created 
 
 * Texts and code in English
 
+## Installation
+### Client side
+
+* Install Browserify, Rollupify and Watchify using NPM `npm install`
+* Bundle the client side JS `npm run bundle-client`
+
 # Description
 
 ## Design decisions
