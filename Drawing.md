@@ -2,7 +2,7 @@
 
 ## Ho do we draw things ?
 
-We will draw the different elements in a canvas using WebGl.
+We will draw the different elements in a canvas using Canvas2d.
 
 ## What are the different elements we need to draw ?
 
