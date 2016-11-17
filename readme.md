@@ -4,9 +4,13 @@ A multiplayer [Snake](https://en.wikipedia.org/wiki/Snake_(video_game)) created 
 
 # Constraints/instructions
 
-* Texts an code in English
+* Texts and code in English
 
 # Description
+
+## Design decisions
+
+
 
 
 # Licence
