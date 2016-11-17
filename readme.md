@@ -1,6 +1,13 @@
 # MultiSnake
 
-Un [Snake](https://en.wikipedia.org/wiki/Snake_(video_game)) multi-joueur créé par les étudiants du Master dev de l'ECV Digitale
+A multiplayer [Snake](https://en.wikipedia.org/wiki/Snake_(video_game)) created by ECV Digitale Dev Master students.
+
+# Constraints/instructions
+
+* Texts an code in English
+
+# Description
+
 
 # Licence
 
