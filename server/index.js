@@ -11,8 +11,6 @@ import Board from '../client/js/board.js';
 
 var b = new Board();
 
-const snakes = [];
-
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
 app.get('/', (req, res) => {
@@ -28,9 +26,8 @@ io.on('connection', socket => {
 		io.emit('movement', event);
 	});
 
-	socket.on('new snake', snake => {
-		snakes.push(snake);
-		io.emit('snakes', snakes);
+	socket.on('new snake', snakeData => {
+		socket.broadcast.emit('snakeData', snakeData);
 	});
 	
 	socket.on('disconnect', () => {
