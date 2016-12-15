@@ -30,9 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
 				let apple = board.newApple(data.x, data.y);
 				apple.draw();
 			});
+			
 
+			let snake = board.snakes[board.snakes.length - 1];
+			server.sendNewUser(snake);
+           
 
-			server.sendNewUser();
 			server.sendDeleteUser();
 			server.sendMove();
 
