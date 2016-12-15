@@ -6,8 +6,8 @@ var ee = require('event-emitter');
 var clientId;
 
 var serverObject = ee({
-	sendNewUser(){
-		socket.emit('client ID', clientId);
+	sendNewUser(snake){
+		socket.emit('new snake', snake);
 	},
 	sendDeleteUser(){
 		socket.emit('disconnect', 'Un utilisateur s\'est déconnecté');
@@ -25,8 +25,8 @@ socket.on('end', function(){
 	serverObject.emit('end');
 });
 
-socket.on('client ID', function(id){
-	clientId = id;
+socket.on('snakes', snakes => {
+	console.log(snakes);
 });
 
 socket.on('connect message', function() {
