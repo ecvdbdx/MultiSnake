@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', socket => {
+io.on('connection', function(socket) {
 
 	io.emit('client ID', socket.id);
 	io.emit('connect message');
@@ -26,12 +26,17 @@ io.on('connection', socket => {
 		io.emit('movement', event);
 	});
 
+
 	socket.on('new snake', snakeData => {
 		socket.broadcast.emit('snakeData', snakeData);
 	});
 	
 	socket.on('disconnect', () => {
 		io.emit('disconnect message');
+	});
+
+	socket.on('changeDirection', (data) => {
+		io.emit('setDirection', data);
 	});
 });
 

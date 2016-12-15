@@ -14,6 +14,9 @@ var serverObject = ee({
 	},
 	sendMove(event){
 		socket.emit('movement', event);
+	},
+	changeDirection(name, direction) {
+		socket.emit('changeDirection', {name: name, direction: direction});
 	}
 });
 
@@ -39,6 +42,10 @@ socket.on('snakeData', snakeData => {
 
 socket.on('new_apple', function(data) {
 	serverObject.emit('new_apple', data);
+});
+
+socket.on('setDirection', data => {
+	serverObject.emit('setDirection', data);
 });
 
 window.addEventListener('offline', function() {
