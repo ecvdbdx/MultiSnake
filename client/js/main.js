@@ -30,6 +30,24 @@ document.addEventListener('DOMContentLoaded', function () {
 				let apple = board.newApple(data.x, data.y);
 				apple.draw();
 			});
+			
+			{
+				let x = board.snakes[board.snakes.length - 1].x;
+				let y = board.snakes[board.snakes.length - 1].y;
+				let color = board.snakes[board.snakes.length - 1].color;
+				let name = board.snakes[board.snakes.length - 1].name;
+
+				let snakeData = {x, y, name, color};
+
+				server.sendNewUser(snakeData);
+			}
+
+			server.on('snakeData', snakeData => {
+				board.newSnake(snakeData.x, snakeData.y, snakeData.name, snakeData.color);
+				console.log(snakeData);
+				// board.scoreboard.addPlayer(newSnake);
+			});
+           
 
 			server.on('setDirection', data => {
 				board.snakes.forEach(snake => {

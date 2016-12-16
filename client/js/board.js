@@ -27,9 +27,10 @@ export default class Board extends EventEmitter{
 		];
 	}
 
-	newSnake(x, y, name) {
+	newSnake(x, y, name, color) {
+		let finalColor = color ? color : this.getAvailableColor();
 		if(this.snakes.length < 10){
-			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
+			let snake = new Snake(this.context, x, y, finalColor, name);
 			this.scoreboard.addPlayer(snake);
 			snake.draw();
 
@@ -93,7 +94,6 @@ export default class Board extends EventEmitter{
 	}
 
 	checkSnakeSelfCollision() {
-
 		this.snakes.forEach((snake, i) => {
 
 			let firstBodyPart = snake.bodyParts[0];
@@ -107,7 +107,7 @@ export default class Board extends EventEmitter{
                     firstBodyPart.y < bodyPart.y + bodyPart.height &&
                     firstBodyPart.height + firstBodyPart.y > bodyPart.y) {
 
-					this.removeSnakeFromArray(i);
+					// this.removeSnakeFromArray(i);
 				}
 			});
 		});

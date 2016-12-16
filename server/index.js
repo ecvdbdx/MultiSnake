@@ -26,7 +26,12 @@ io.on('connection', function(socket) {
 		io.emit('movement', event);
 	});
 
-	socket.on('disconnect', function() {
+
+	socket.on('new snake', snakeData => {
+		socket.broadcast.emit('snakeData', snakeData);
+	});
+	
+	socket.on('disconnect', () => {
 		io.emit('disconnect message');
 	});
 
