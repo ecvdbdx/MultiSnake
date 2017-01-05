@@ -32,11 +32,11 @@ export default class Board extends EventEmitter{
 	newSnake(x, y, name) {
 		if(this.snakes.length < 10){
 			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
-      
+
 			if (this.scoreboard) {
 				this.scoreboard.addPlayer(snake);
 			}
-			
+
 			snake.draw();
 
 			this.snakes.push(snake);
@@ -78,22 +78,7 @@ export default class Board extends EventEmitter{
 
 	createScoreboard() {
 		this.scoreboard = new Scoreboard();
-
 		this.scoreboard.playersContainer.appendTo('#scoreboard');
-	}
-
-	render() {
-		this.intervalId = setInterval(() => {
-			this.snakes.forEach(snake => {
-				if(!snake.dead) {
-					snake.move(this);
-				}
-			});
-			this.scoreboard.updateScores(this.snakes, this.clientLocalSnake);
-			this.checkSnakeSelfCollision();
-			this.checkCollisionWithApples();
-            // END TEMP
-		}, constant.DELAY);
 	}
 
 	stopRendering(){
@@ -123,15 +108,15 @@ export default class Board extends EventEmitter{
 	}
 
 	checkCollisionWithApples() {
-		this.snakes.forEach((snake, i) => {
+		this.snakes.forEach((snake) => {
 
 			let firstBodyPart = snake.bodyParts[0];
 
 			this.apples.forEach((apple, index) => {
 				if (firstBodyPart.x < apple.x + apple.radius * 2 &&
-	                firstBodyPart.x + firstBodyPart.width > apple.x &&
-	                firstBodyPart.y < apple.y + apple.radius * 2 &&
-	                firstBodyPart.height + firstBodyPart.y > apple.y) {
+                    firstBodyPart.x + firstBodyPart.width > apple.x &&
+                    firstBodyPart.y < apple.y + apple.radius * 2 &&
+                    firstBodyPart.height + firstBodyPart.y > apple.y) {
 
 					this.apples.splice(index, 1);
 					snake.addScore();
