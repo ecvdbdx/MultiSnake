@@ -10,6 +10,7 @@ import * as constant from '../client/js/constant';
 import Board from '../client/js/board.js';
 import Snake from '../client/js/snake.js';
 import Scoreboard from '../client/js/scoreboard.js';
+import identifier from 'identifier';
 
 var b = new Board();
 let inProgressGame = false;
@@ -44,9 +45,12 @@ io.on('connection', function(socket) {
 
 	socket.on('snakeNew', name => {
 
+		var id = identifier(constant.ID_SIZE);
+		console.log(id);
+
 		let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 		let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
-		let snake = b.newSnake(long, lat, name);
+		let snake = b.newSnake(long, lat, name, id);
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
 
@@ -66,13 +70,14 @@ io.on('connection', function(socket) {
             b.checkCollisionWithApples();
             b.snakes.forEach(snake => {
                 if(!snake.dead) {
-                    snake.move();
+                    snake.move(); 
                 }
             });
             if(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
                 let apple = b.generateApple();
                 io.emit('new_apple', apple);
             }
+            io.emit('sendPositions', b.snakes, b.apples);
         }, constant.DELAY);
 
 		setInterval(function() {

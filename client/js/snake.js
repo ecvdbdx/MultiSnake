@@ -5,7 +5,7 @@ import * as constant from './constant';
 
 export default class Snake {
 
-	constructor(context, x, y, color, name) {
+	constructor(context, x, y, color, name, id) {
 		this.context = context;
 		this.x = x;
 		this.y = y;
@@ -19,6 +19,7 @@ export default class Snake {
 
 		this.bodyParts = [];
 		this.name = name;
+		this.id = id;
 		this.dead = false;
 	}
 

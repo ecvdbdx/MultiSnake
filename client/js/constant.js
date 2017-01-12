@@ -17,3 +17,5 @@ export const TOTAL_DURATION = 15000;
 export const GAME_DURATION = 10000;
 
 export const GRID_SIZE = 30;
+
+export const ID_SIZE = 16;

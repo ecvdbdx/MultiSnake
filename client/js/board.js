@@ -29,9 +29,9 @@ export default class Board extends EventEmitter{
 		this.clientLocalSnake = undefined;
 	}
 
-	newSnake(x, y, name) {
+	newSnake(x, y, name, id) {
 		if(this.snakes.length < 10){
-			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
+			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name, id);
 			snake.draw();
 
 			this.snakes.push(snake);
@@ -76,6 +76,21 @@ export default class Board extends EventEmitter{
 	createScoreboard() {
 		this.scoreboard = new Scoreboard();
 		this.scoreboard.playersContainer.appendTo('#scoreboard');
+	}
+
+	render(snakes, apples){
+		
+		snakes.forEach(snake => {
+			
+			this.snakes.find(function (data) {
+				return snake.id === data.id;
+			})
+		});
+		/*apples.forEach(apple => {
+			this.apples.find(function (data) {
+				return apple.id === data.id;
+			})
+		});*/
 	}
 
 	stopRendering(){

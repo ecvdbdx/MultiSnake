@@ -24,11 +24,13 @@ export default class SnakePart {
 	}
 
 	remove() {
-		this.context.beginPath();
-		this.context.rect(this.x, this.y, this.width, this.height);
-		this.context.fillStyle = constant.BACKGROUND_COLOR;
-		this.context.fill();
-		this.context.closePath();
+		if (this.context) {
+			this.context.beginPath();
+			this.context.rect(this.x, this.y, this.width, this.height);
+			this.context.fillStyle = constant.BACKGROUND_COLOR;
+			this.context.fill();
+			this.context.closePath();
+		}
 	}
 
 }
