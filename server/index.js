@@ -49,6 +49,10 @@ io.on('connection', function(socket) {
 		let snake = b.newSnake(long, lat, name);
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
+
+		if(inProgressGame){
+			io.emit('joinGame', b.apples);
+		}
 	});
 
 	socket.on('changeDirection', (data) => {
@@ -56,7 +60,8 @@ io.on('connection', function(socket) {
 	});
 
 	if(!inProgressGame){
-        setInterval(function() {
+
+        setInterval(function() { 
             b.checkSnakeSelfCollision();
             b.checkCollisionWithApples();
             b.snakes.forEach(snake => {
@@ -72,6 +77,7 @@ io.on('connection', function(socket) {
 
 		setInterval(function() {
 			inProgressGame = true;
+
 			io.emit('start', 'Démarrage de la partie');
 			console.log('Démarrage de la partie');
 
@@ -83,13 +89,8 @@ io.on('connection', function(socket) {
 		}, constant.TOTAL_DURATION);
 	}else{
 		//une partie est déjà en cours
+		console.log('game en cours');
 	}
-
-	socket.on('newPlayer', function(name) {
-		if(inProgressGame){
-			io.emit('joinGame', b.apples);
-		}
-	});
 });
 
 http.listen(3000, () => {
