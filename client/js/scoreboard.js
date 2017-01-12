@@ -25,7 +25,7 @@ export default class Scoreboard {
 		return li;
 	}
 
-	updateScores(players) {
+	updateScores(players, clientLocalSnake) {
 		players.sort(function(p1, p2){
 			return p2.score - p1.score;
 		})
@@ -33,6 +33,9 @@ export default class Scoreboard {
 		this.playersContainer.empty();
 
 		players.forEach((player) => {
+      if(player === clientLocalSnake){
+				this.playersToLi.get(player).addClass('current');
+			}
 			this.playersContainer.append(this.createPlayer(player));
 		});
 	}

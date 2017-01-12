@@ -26,6 +26,7 @@ export default class Board extends EventEmitter{
 			"#51f1e0",
 			"#F2385A"
 		];
+		this.clientLocalSnake = undefined;
 	}
 
 	newSnake(x, y, name) {
@@ -80,9 +81,11 @@ export default class Board extends EventEmitter{
 	render() {
 		this.intervalId = setInterval(() => {
 			this.snakes.forEach(snake => {
-				snake.move(this);
+				if(!snake.dead) {
+					snake.move(this);
+				}
 			});
-			this.scoreboard.updateScores(this.snakes);
+			this.scoreboard.updateScores(this.snakes, this.clientLocalSnake);
 			this.checkSnakeSelfCollision();
 			this.checkCollisionWithApples();
             // END TEMP
@@ -95,7 +98,7 @@ export default class Board extends EventEmitter{
 
 	checkSnakeSelfCollision() {
 
-		this.snakes.forEach((snake, i) => {
+		this.snakes.forEach((snake) => {
 
 			let firstBodyPart = snake.bodyParts[0];
 			snake.bodyParts.forEach((bodyPart, index) => {
@@ -108,7 +111,8 @@ export default class Board extends EventEmitter{
                     firstBodyPart.y < bodyPart.y + bodyPart.height &&
                     firstBodyPart.height + firstBodyPart.y > bodyPart.y) {
 
-					this.removeSnakeFromArray(i);
+					//this.removeSnakeFromArray(i);
+					snake.remove();
 				}
 			});
 		});
