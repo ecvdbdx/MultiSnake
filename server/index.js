@@ -10,6 +10,7 @@ import * as constant from '../client/js/constant';
 import Board from '../client/js/board.js';
 
 var b = new Board();
+let pendingGame = false;
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
@@ -41,19 +42,9 @@ io.on('connection', function(socket) {
 		io.emit('setDirection', data);
 	});
 
-	startGame();
-
-	socket.on('newPlayer', function(name) {
-		io.emit('joinGame', b.apples);
-	});
-});
-
-let partieEnCours = false;
-
-function startGame(){
-	if(partieEnCours === false){
+	if(pendingGame === false){
 		setInterval(function() {
-			partieEnCours = true;
+			pendingGame = true;
 			io.emit('start', 'Démarrage de la partie');
 
 			console.log('interval');
@@ -63,14 +54,21 @@ function startGame(){
 			}
 
 			setTimeout(function() {
-				partieEnCours = false;
+				pendingGame = false;
 				io.emit('end', 'Fin de la partie');
 			}, constant.GAME_DURATION);
 		}, constant.TOTAL_DURATION);
 	}else{
 		//une partie est déjà en cours
 	}
-}
+
+	socket.on('newPlayer', function(name) {
+		if(pendingGame === true){
+			io.emit('joinGame', b.apples);
+		}
+	});
+});
+
 http.listen(3000, () => {
 	console.log('listening on *:3000');
 });
