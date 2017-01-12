@@ -22,16 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
-			let clientLocaleSnake = board.newSnake(long, lat, name);
+			let clientLocaleSnake = '';
 
 			board.clientLocalSnake = clientLocaleSnake;
-      
-			server.on('joinGame', function(apples){
-				apples.forEach((apple, index) => {
-					let drawApple = board.newApple(apple.x, apple.y);
-					drawApple.draw();
-				});
-			});
+
 
 			server.sendSnakeNew(name);
       
@@ -40,14 +34,16 @@ document.addEventListener('DOMContentLoaded', function () {
 				apple.draw();
 			});
 
-			var clientLocaleSnake;
-
 			server.on('new_snake', function(data){
 				clientLocaleSnake = board.newSnake(data.x, data.y, data.name);
-				
+			});      
+			server.on('joinGame', function(apples){
+				apples.forEach((apple, index) => {
+					let drawApple = board.newApple(apple.x, apple.y);
+					drawApple.draw();
+				});
 			});
 
-			console.log(clientLocaleSnake);
 
 			server.on('setDirection', data => {
 				board.snakes.forEach(snake => {
@@ -57,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				});
 			});
 
-			server.sendNewUser(name);
 			//server.sendDeleteUser();
 			server.sendMove();
 
