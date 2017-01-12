@@ -4,6 +4,7 @@ import Snake from './snake';
 import Apple from './apple';
 import Scoreboard from './scoreboard';
 import * as constant from './constant';
+import displayMessage from './displayMessage.js';
 import EventEmitter from 'event-emitter-es6';
 
 export default class Board extends EventEmitter{
@@ -137,7 +138,7 @@ export default class Board extends EventEmitter{
 	removeSnakeFromArray(i) {
 		this.snakes[i].remove();
 		this.snakes.splice(i, 1);
-		this.scoreboard.updateScores(this.snakes[i]);
+		this.scoreboard.updateScores(this.snakes);
+		displayMessage("You lose !", "You are the worst player we ever saw !" );
 	}
-
 }
