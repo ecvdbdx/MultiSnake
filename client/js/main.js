@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				clientLocaleSnake = board.newSnake(data.x, data.y, data.name);
 			});      
 			server.on('joinGame', function(apples){
-				apples.forEach((apple, index) => {
+				apples.forEach((apple) => {
 					let drawApple = board.newApple(apple.x, apple.y);
 					drawApple.draw();
 				});
