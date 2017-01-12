@@ -14,11 +14,13 @@ export default class SnakePart {
 	}
 
 	draw() {
-		this.context.beginPath();
-		this.context.rect(this.x, this.y, this.width, this.height);
-		this.context.fillStyle = this.color;
-		this.context.fill();
-		this.context.closePath();
+		if (this.context) {
+			this.context.beginPath();
+			this.context.rect(this.x, this.y, this.width, this.height);
+			this.context.fillStyle = this.color;
+			this.context.fill();
+			this.context.closePath();
+		}
 	}
 
 	remove() {
