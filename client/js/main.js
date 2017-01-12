@@ -3,7 +3,7 @@
 import Board from './board';
 import server from './sendToServer.js';
 import createCanvasGame from './createCanvasGame.js';
-import displayDisconnectMessage from './displayDisconnectMessage.js';
+import displayMessage from './displayMessage.js';
 import * as constant from './constant';
 import $ from 'jquery';
 
@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			let board = new Board(context);
 			board.createScoreboard();
 
+			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
+			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
+			let clientLocaleSnake = board.newSnake(long, lat, name);
+
+			board.clientLocalSnake = clientLocaleSnake;
+      
 			server.on('joinGame', function(apples){
 				apples.forEach((apple, index) => {
 					let drawApple = board.newApple(apple.x, apple.y);
@@ -64,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			server.on('disconnect', function(){
 				board.stopRendering();
-				displayDisconnectMessage();
+				displayMessage("Warning !", "You have been disconnected from the server ! Check your internet connection !");
 			});
 
 			$('body').keydown((e) => {
