@@ -63,10 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			//server.sendAppleEaten(x, y);
 
-			board.render();
+			//board.render();
 			board.on('appleEaten', function(position){
 				server.sendAppleEaten(position);
 			});
+
+
 
 			server.on('disconnect', function(){
 				board.stopRendering();

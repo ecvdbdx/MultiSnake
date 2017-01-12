@@ -50,21 +50,30 @@ io.on('connection', function(socket) {
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
 	});
-  
+
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});
 
 	if(!inProgressGame){
+        setInterval(function() {
+            b.checkSnakeSelfCollision();
+            b.checkCollisionWithApples();
+            b.snakes.forEach(snake => {
+                if(!snake.dead) {
+                    snake.move();
+                }
+            });
+            if(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
+                let apple = b.generateApple();
+                io.emit('new_apple', apple);
+            }
+        }, constant.DELAY);
+
 		setInterval(function() {
 			inProgressGame = true;
 			io.emit('start', 'Démarrage de la partie');
 			console.log('Démarrage de la partie');
-			
-			while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
-				let apple = b.generateApple();
-				io.emit('new_apple', apple);
-			}
 
 			setTimeout(function() {
 				inProgressGame = false;
