@@ -50,7 +50,7 @@ io.on('connection', function(socket) {
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
 	});
-	
+  
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});

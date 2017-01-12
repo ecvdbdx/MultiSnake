@@ -25,21 +25,21 @@ export default class Board extends EventEmitter{
 			"#51f1e0",
 			"#F2385A"
 		];
+		this.clientLocalSnake = undefined;
 	}
 
 	newSnake(x, y, name) {
 		if(this.snakes.length < 10){
 			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
+      
 			if (this.scoreboard) {
 				this.scoreboard.addPlayer(snake);
 			}
-
-			console.log('newSnake()');
 			
 			snake.draw();
 
 			this.snakes.push(snake);
-
+			this.scoreboard.updateScores(this.snakes);
 			return snake;
 		} else {
 			console.error('Error : only 10 snakes can be on the board');
@@ -88,7 +88,7 @@ export default class Board extends EventEmitter{
 					snake.move(this);
 				}
 			});
-			this.scoreboard.updateScores(this.snakes);
+			this.scoreboard.updateScores(this.snakes, this.clientLocalSnake);
 			this.checkSnakeSelfCollision();
 			this.checkCollisionWithApples();
             // END TEMP
@@ -144,8 +144,8 @@ export default class Board extends EventEmitter{
 
 	removeSnakeFromArray(i) {
 		this.snakes[i].remove();
-		this.scoreboard.removePlayer(this.snakes[i]);
 		this.snakes.splice(i, 1);
+		this.scoreboard.updateScores(this.snakes[i]);
 	}
 
 }

@@ -22,19 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			board.createScoreboard();
 
 			server.sendSnakeNew(name);
-
-			
-
-			// /* Random place on board for testing purpose */
-			// let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
-			// let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
-			// let clientLocaleSnake = board.newSnake(long, lat, name);
-
-			// board.on('snakeNew', function(name){
-			// 	console.log('main');
-			// 	server.sendSnakeNew(name);
-			// });
-
+      
 			server.on('new_apple', function(data){
 				let apple = board.newApple(data.x, data.y);
 				apple.draw();
@@ -56,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 				});
 			});
-
 			server.sendNewUser();
 			//server.sendDeleteUser();
 			server.sendMove();
