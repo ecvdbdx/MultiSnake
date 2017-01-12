@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
-			let clientLocaleSnake = '';
+			let clientLocaleSnake = undefined;
 
 			board.clientLocalSnake = clientLocaleSnake;
 
