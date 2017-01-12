@@ -86,3 +86,18 @@ form.username button{
     margin:auto;
     display:block;
 }
+
+li.current{
+  position:relative;
+}
+
+li.current::after{
+  content:'';
+  border-radius: 50%;
+  position:absolute;
+  width:10px;
+  height:10px;
+  background-color:rgb(173, 56, 35);
+  left:-5px;
+  top:40%;
+}

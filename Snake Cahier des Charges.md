@@ -12,7 +12,7 @@ Les joueurs contrôlent une longue et fine ligne semblable à un serpent, qui do
 - 5 pommes sont disponible au début de la partie
 - Une pomme apparrait à chaque fois qu'une pomme est mangée
 - Si un serpent atteint le bord de la carte, il passe de l'autre côté
-- Un serpent qui meurt a la possibilité de revenir dans la partie
+- Un serpent qui meurt a la possibilité de revenir dans la partie (Lorsque tous les serpents sont morts)
 
 ##Déroulement d'une partie
 - Le nombre de joueurs maximum dans une partie est de 10

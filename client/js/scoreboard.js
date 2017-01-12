@@ -4,14 +4,7 @@ export default class Scoreboard {
 
 	constructor() {
 		this.playersToLi = new WeakMap;
-		this.playersContainer = $('<ul>', {id: 'player-list'});
-	}
-
-	addPlayer(player) {
-		let playerContainer = this.createPlayer(player);
-		this.playersToLi.set(player, playerContainer);
-
-		this.playersContainer.append(playerContainer);
+		this.playersContainer = $('<ol>', {id: 'player-list'});
 	}
 
 	createPlayer(player) {
@@ -32,15 +25,18 @@ export default class Scoreboard {
 		return li;
 	}
 
-	updateScores(players) {
+	updateScores(players, clientLocalSnake) {
+		players.sort(function(p1, p2){
+			return p2.score - p1.score;
+		})
+
+		this.playersContainer.empty();
+
 		players.forEach((player) => {
-			this.playersToLi.get(player).find('span.score').text(player.score);
+      if(player === clientLocalSnake){
+				this.playersToLi.get(player).addClass('current');
+			}
+			this.playersContainer.append(this.createPlayer(player));
 		});
 	}
-
-	removePlayer(player) {
-		this.playersToLi.get(player).remove();
-		this.playersToLi.delete(player);
-	}
-
 }
