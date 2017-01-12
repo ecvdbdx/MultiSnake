@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 
 			server.on('new_snake', function(data){
-				clientLocaleSnake = board.newSnake(data.x, data.y, data.name);
+				clientLocaleSnake = board.newSnake(data.x, data.y, data.name, data.id);
 			});      
 			server.on('joinGame', function(apples){
-				apples.forEach((apple) => {
+				apples.forEach(apple => {
 					let drawApple = board.newApple(apple.x, apple.y);
 					drawApple.draw();
 				});
@@ -53,14 +53,28 @@ document.addEventListener('DOMContentLoaded', function () {
 				});
 			});
 
-			//server.sendDeleteUser();
 			server.sendMove();
 
 			//server.sendAppleEaten(x, y);
 
-			board.render();
 			board.on('appleEaten', function(position){
 				server.sendAppleEaten(position);
+			});
+
+			server.on('sendPositions', function(snakes, apples){
+				snakes.forEach(snake => {
+					var snakeData = board.snakes.find(function (data) {snake.id === data.id;});
+					if(!snakeData){
+						console.log(snakeData);
+						board.newSnake(snake.x, snake.y, snake.name, snake.id);
+					}else{
+						console.log('màj');
+						snake.x = laonsaitpas.x; 
+						snake.y = laonsaitpas.y; // trouver l'ordre à faire, pour créer les serpents non existant, et màj les serpents déjà dans board.snake
+					}
+				});
+
+				board.render(snakes, apples);
 			});
 
 			server.on('disconnect', function(){

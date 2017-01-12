@@ -57,6 +57,10 @@ socket.on('joinGame', function(apples) {
 	serverObject.emit('joinGame', apples);
 });
 
+socket.on('sendPositions', function(snakes, apples) {
+	serverObject.emit('sendPositions', snakes, apples);
+});
+
 socket.on('appleEaten', function(data) {
 	console.log('sendto');
 	serverObject.emit('new_apple', data);

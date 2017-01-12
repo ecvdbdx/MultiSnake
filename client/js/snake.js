@@ -5,7 +5,7 @@ import * as constant from './constant';
 
 export default class Snake {
 
-	constructor(context, x, y, color, name) {
+	constructor(context, x, y, color, name, id) {
 		this.context = context;
 		this.x = x;
 		this.y = y;
@@ -19,6 +19,7 @@ export default class Snake {
 
 		this.bodyParts = [];
 		this.name = name;
+		this.id = id;
 		this.dead = false;
 	}
 
@@ -50,8 +51,6 @@ export default class Snake {
 			lastBodyPart.y = 0;
 		}
 
-		lastBodyPart.draw();
-
 		this.moveBodyPartsInArray();
 	}
 
@@ -67,8 +66,6 @@ export default class Snake {
 		if (firstBodyPart.y <= 0) {
 			lastBodyPart.y = this.context.canvas.clientHeight - (this.height + constant.BODY_PART_MARGIN);
 		}
-
-		lastBodyPart.draw();
 
 		this.moveBodyPartsInArray();
 	}
@@ -87,8 +84,6 @@ export default class Snake {
 			lastBodyPart.x = this.context.canvas.clientWidth - (this.width + constant.BODY_PART_MARGIN);
 		}
 
-		lastBodyPart.draw();
-
 		this.moveBodyPartsInArray();
 	}
 
@@ -106,8 +101,6 @@ export default class Snake {
 			lastBodyPart.x = 0;
 		}
 
-		lastBodyPart.draw();
-
 		this.moveBodyPartsInArray();
 	}
 
@@ -119,39 +112,20 @@ export default class Snake {
 		this.bodyParts.splice(0, 0, this.bodyParts.splice(this.bodyParts.length - 1, 1)[0]);
 	}
 
-	move(board) {
-		this.checkCollisionWithApples(board.apples);
-
+	move() {
+		/*this.checkCollisionWithApples(board.apples);*/
 		if (this.direction === 'right') {
-			this.moveRight();
+			return this.moveRight();
 		}
 		else if (this.direction === 'down') {
-			this.moveDown();
+			return this.moveDown();
 		}
 		else if (this.direction === 'up') {
-			this.moveUp();
+			return this.moveUp();
 		}
 		else if (this.direction === 'left') {
-			this.moveLeft();
+			return this.moveLeft();
 		}
-	}
-
-	checkCollisionWithApples(apples) {
-		let firstBodyPart = this.bodyParts[0];
-
-		apples.forEach((apple, index) => {
-			if (firstBodyPart.x < apple.x + apple.radius * 2 &&
-                firstBodyPart.x + firstBodyPart.width > apple.x &&
-                firstBodyPart.y < apple.y + apple.radius * 2 &&
-                firstBodyPart.height + firstBodyPart.y > apple.y) {
-
-				apples.splice(index, 1);
-				this.addScore();
-
-				this.addBodyPart();
-
-			}
-		});
 	}
 
 	remove() {
