@@ -46,8 +46,8 @@ io.on('connection', function(socket) {
 		setInterval(function() {
 			inProgressGame = true;
 			io.emit('start', 'Démarrage de la partie');
-
-			console.log('interval');
+			console.log('Démarrage de la partie');
+			
 			while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
 				let apple = b.generateApple();
 				io.emit('new_apple', apple);
@@ -55,6 +55,7 @@ io.on('connection', function(socket) {
 
 			setTimeout(function() {
 				inProgressGame = false;
+				console.log('Fin de la partie');
 				io.emit('end', 'Fin de la partie');
 			}, constant.GAME_DURATION);
 		}, constant.TOTAL_DURATION);

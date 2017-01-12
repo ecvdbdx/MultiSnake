@@ -13,7 +13,7 @@ export const DEFAULT_APPLES_NUMBER = 5;
 export const CANVAS_WIDTH = 1200;
 export const CANVAS_HEIGHT = 690;
 
-export const TOTAL_DURATION = 5000;
-export const GAME_DURATION = 3000;
+export const TOTAL_DURATION = 15000;
+export const GAME_DURATION = 10000;
 
 export const GRID_SIZE = 30;
