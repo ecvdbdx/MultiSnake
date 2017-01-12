@@ -25,6 +25,7 @@ export default class Board extends EventEmitter{
 			"#51f1e0",
 			"#F2385A"
 		];
+		this.clientLocalSnake = undefined;
 	}
 
 	newSnake(x, y, name) {
@@ -83,7 +84,7 @@ export default class Board extends EventEmitter{
 					snake.move(this);
 				}
 			});
-			this.scoreboard.updateScores(this.snakes);
+			this.scoreboard.updateScores(this.snakes, this.clientLocalSnake);
 			this.checkSnakeSelfCollision();
 			this.checkCollisionWithApples();
             // END TEMP

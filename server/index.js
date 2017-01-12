@@ -37,7 +37,7 @@ io.on('connection', function(socket) {
 			}
 		});
 	});
-	
+
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});

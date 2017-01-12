@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let clientLocaleSnake = board.newSnake(long, lat, name);
+			board.clientLocalSnake = clientLocaleSnake;
 
 			
 
@@ -40,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 				});
 			});
-
 			server.sendNewUser();
 			//server.sendDeleteUser();
 			server.sendMove();
