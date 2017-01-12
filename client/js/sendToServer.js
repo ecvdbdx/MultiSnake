@@ -5,6 +5,8 @@ var ee = require('event-emitter');
 
 var clientId;
 
+// Envoi vers le serveur
+
 var serverObject = ee({
 	sendNewUser(){
 		socket.emit('client ID', clientId);
@@ -18,10 +20,16 @@ var serverObject = ee({
 	sendAppleEaten(position){
 		socket.emit('appleEaten', position);
 	},
+	sendSnakeNew(name){
+		console.log('sendToServer');
+		socket.emit('snakeNew', name);
+	},
 	changeDirection(name, direction) {
 		socket.emit('changeDirection', {name: name, direction: direction});
 	}
 });
+
+// Reception du serveur et envoi vers le client
 
 socket.on('start', function(){
 	serverObject.emit('start');
@@ -50,6 +58,15 @@ socket.on('new_apple', function(data) {
 socket.on('appleEaten', function(data) {
 	console.log('sendto');
 	serverObject.emit('new_apple', data);
+});
+
+socket.on('new_snake', function(data) {
+	serverObject.emit('new_snake', data);
+});
+
+socket.on('snakeMove', function(data) {
+	console.log('sendto');
+	serverObject.emit('new_snake_position', data);
 });
 
 socket.on('setDirection', data => {

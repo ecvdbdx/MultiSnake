@@ -31,6 +31,10 @@ export default class Board extends EventEmitter{
 	newSnake(x, y, name) {
 		if(this.snakes.length < 10){
 			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
+      
+			if (this.scoreboard) {
+				this.scoreboard.addPlayer(snake);
+			}
 			
 			snake.draw();
 
