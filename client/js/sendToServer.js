@@ -6,8 +6,8 @@ var ee = require('event-emitter');
 var clientId;
 
 var serverObject = ee({
-	sendNewUser(){
-		socket.emit('client ID', clientId);
+	sendNewUser(name){
+		socket.emit('newPlayer', name);
 	},
 	sendDeleteUser(){
 		socket.emit('disconnect', 'Un utilisateur s\'est déconnecté');
@@ -45,6 +45,10 @@ socket.on('disconnect', function() {
 
 socket.on('new_apple', function(data) {
 	serverObject.emit('new_apple', data);
+});
+
+socket.on('joinGame', function(apples) {
+	serverObject.emit('joinGame', apples);
 });
 
 socket.on('appleEaten', function(data) {

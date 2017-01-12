@@ -19,7 +19,6 @@ app.get('/', (req, res) => {
 
 io.on('connection', function(socket) {
 
-	io.emit('client ID', socket.id);
 	io.emit('connect message');
 
 	socket.on('movement', event => {
@@ -41,21 +40,37 @@ io.on('connection', function(socket) {
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});
+
+	startGame();
+
+	socket.on('newPlayer', function(name) {
+		io.emit('joinGame', b.apples);
+	});
 });
 
-setInterval(function() {
-	io.emit('start', 'Démarrage de la partie');
+let partieEnCours = false;
 
-	while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
-		let apple = b.generateApple();
-		io.emit('new_apple', apple);
+function startGame(){
+	if(partieEnCours === false){
+		setInterval(function() {
+			partieEnCours = true;
+			io.emit('start', 'Démarrage de la partie');
+
+			console.log('interval');
+			while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
+				let apple = b.generateApple();
+				io.emit('new_apple', apple);
+			}
+
+			setTimeout(function() {
+				partieEnCours = false;
+				io.emit('end', 'Fin de la partie');
+			}, constant.GAME_DURATION);
+		}, constant.TOTAL_DURATION);
+	}else{
+		//une partie est déjà en cours
 	}
-
-	setTimeout(function() {
-		io.emit('end', 'Fin de la partie');
-	}, constant.GAME_DURATION);
-}, constant.TOTAL_DURATION);
-
+}
 http.listen(3000, () => {
 	console.log('listening on *:3000');
 });

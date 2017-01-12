@@ -8,7 +8,6 @@ import * as constant from './constant';
 import $ from 'jquery';
 
 document.addEventListener('DOMContentLoaded', function () {
-
 	server.on('connection', function(){
 
 		$('form.username').submit(function(e) {
@@ -20,6 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			let context = createCanvasGame();
 			let board = new Board(context);
 			board.createScoreboard();
+
+			server.on('joinGame', function(apples){
+				apples.forEach((apple, index) => {
+					let drawApple = board.newApple(apple.x, apple.y);
+					drawApple.draw();
+				});
+			});
 
 			/* Random place on board for testing purpose */
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
@@ -39,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				});
 			});
 
-			server.sendNewUser();
+			server.sendNewUser(name);
 			//server.sendDeleteUser();
 			server.sendMove();
 
