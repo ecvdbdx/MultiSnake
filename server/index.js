@@ -10,7 +10,7 @@ import * as constant from '../client/js/constant';
 import Board from '../client/js/board.js';
 
 var b = new Board();
-let pendingGame = false;
+let inProgressGame = false;
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
@@ -42,9 +42,9 @@ io.on('connection', function(socket) {
 		io.emit('setDirection', data);
 	});
 
-	if(pendingGame === false){
+	if(!inProgressGame){
 		setInterval(function() {
-			pendingGame = true;
+			inProgressGame = true;
 			io.emit('start', 'Démarrage de la partie');
 
 			console.log('interval');
@@ -54,7 +54,7 @@ io.on('connection', function(socket) {
 			}
 
 			setTimeout(function() {
-				pendingGame = false;
+				inProgressGame = false;
 				io.emit('end', 'Fin de la partie');
 			}, constant.GAME_DURATION);
 		}, constant.TOTAL_DURATION);
@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
 	}
 
 	socket.on('newPlayer', function(name) {
-		if(pendingGame === true){
+		if(inProgressGame){
 			io.emit('joinGame', b.apples);
 		}
 	});
