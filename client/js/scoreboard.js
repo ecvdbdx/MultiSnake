@@ -3,11 +3,10 @@ import $ from 'jquery';
 export default class Scoreboard {
 
 	constructor() {
-		this.playersToLi = new WeakMap;
 		this.playersContainer = $('<ol>', {id: 'player-list'});
 	}
 
-	createPlayer(player) {
+	createPlayer(player, clientLocalSnake) {
 		var li = $('<li>');
 		li.css('color', player.color);
 		li.data('name', player.name);
@@ -22,6 +21,10 @@ export default class Scoreboard {
 			})
 		);
 
+  		if(player === clientLocalSnake){
+  			li.addClass('current');
+		}
+
 		return li;
 	}
 
@@ -33,10 +36,7 @@ export default class Scoreboard {
 		this.playersContainer.empty();
 
 		players.forEach((player) => {
-      if(player === clientLocalSnake){
-				this.playersToLi.get(player).addClass('current');
-			}
-			this.playersContainer.append(this.createPlayer(player));
+			this.playersContainer.append(this.createPlayer(player, clientLocalSnake));
 		});
 	}
 }

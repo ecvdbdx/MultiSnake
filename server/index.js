@@ -12,6 +12,7 @@ import Snake from '../client/js/snake.js';
 import Scoreboard from '../client/js/scoreboard.js';
 
 var b = new Board();
+let inProgressGame = false;
 
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
@@ -22,7 +23,6 @@ app.get('/', (req, res) => {
 
 io.on('connection', function(socket) {
 
-	io.emit('client ID', socket.id);
 	io.emit('connect message');
 	console.log('Nouvelle connexion');
 
@@ -54,20 +54,34 @@ io.on('connection', function(socket) {
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});
-});
 
-setInterval(function() {
-	io.emit('start', 'Démarrage de la partie');
+	if(!inProgressGame){
+		setInterval(function() {
+			inProgressGame = true;
+			io.emit('start', 'Démarrage de la partie');
+			console.log('Démarrage de la partie');
+			
+			while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
+				let apple = b.generateApple();
+				io.emit('new_apple', apple);
+			}
 
-	while(b.apples.length < constant.DEFAULT_APPLES_NUMBER){
-		let apple = b.generateApple();
-		io.emit('new_apple', apple);
+			setTimeout(function() {
+				inProgressGame = false;
+				console.log('Fin de la partie');
+				io.emit('end', 'Fin de la partie');
+			}, constant.GAME_DURATION);
+		}, constant.TOTAL_DURATION);
+	}else{
+		//une partie est déjà en cours
 	}
 
-	setTimeout(function() {
-		io.emit('end', 'Fin de la partie');
-	}, constant.GAME_DURATION);
-}, constant.TOTAL_DURATION);
+	socket.on('newPlayer', function(name) {
+		if(inProgressGame){
+			io.emit('joinGame', b.apples);
+		}
+	});
+});
 
 http.listen(3000, () => {
 	console.log('listening on *:3000');
