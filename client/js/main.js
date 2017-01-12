@@ -20,20 +20,28 @@ document.addEventListener('DOMContentLoaded', function () {
 			let context = createCanvasGame();
 			let board = new Board(context);
 			board.createScoreboard();
-			
-			/* Random place on board for testing purpose */
+
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let clientLocaleSnake = board.newSnake(long, lat, name);
 
 			board.clientLocalSnake = clientLocaleSnake;
 
-			
-
+			server.sendSnakeNew(name);
+      
 			server.on('new_apple', function(data){
 				let apple = board.newApple(data.x, data.y);
 				apple.draw();
 			});
+
+			var clientLocaleSnake;
+
+			server.on('new_snake', function(data){
+				clientLocaleSnake = board.newSnake(data.x, data.y, data.name);
+				
+			});
+
+			console.log(clientLocaleSnake);
 
 			server.on('setDirection', data => {
 				board.snakes.forEach(snake => {
