@@ -8,9 +8,12 @@ const io = require('socket.io')(http);
 
 import * as constant from '../client/js/constant';
 import Board from '../client/js/board.js';
+import Snake from '../client/js/snake.js';
+import Scoreboard from '../client/js/scoreboard.js';
 
 var b = new Board();
 let inProgressGame = false;
+
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
@@ -21,6 +24,7 @@ app.get('/', (req, res) => {
 io.on('connection', function(socket) {
 
 	io.emit('connect message');
+	console.log('Nouvelle connexion');
 
 	socket.on('movement', event => {
 		io.emit('movement', event);
@@ -38,6 +42,15 @@ io.on('connection', function(socket) {
 		});
 	});
 
+	socket.on('snakeNew', name => {
+
+		let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
+		let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
+		let snake = b.newSnake(long, lat, name);
+		console.log("snake : " + snake.name);
+		io.emit('new_snake', snake);
+	});
+  
 	socket.on('changeDirection', (data) => {
 		io.emit('setDirection', data);
 	});

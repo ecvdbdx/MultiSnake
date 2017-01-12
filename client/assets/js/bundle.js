@@ -1,0 +1,1 @@
+console.error("Error: SyntaxError: Unexpected token < in JSON at position 235 while parsing json file /Users/Florent/Sites/MultiSnake/package.json");
