@@ -40,8 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				apple.draw();
 			});
 
-			var clientLocaleSnake;
-
 			server.on('new_snake', function(data){
 				clientLocaleSnake = board.newSnake(data.x, data.y, data.name);
 				
