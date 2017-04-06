@@ -14,6 +14,9 @@ import Scoreboard from '../client/js/scoreboard.js';
 var b = new Board();
 let inProgressGame = false;
 
+setInterval(() => {
+	console.log('board.snakes.length', b.snakes.length);
+}, 2000);
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
@@ -42,11 +45,18 @@ io.on('connection', function(socket) {
 		});
 	});
 
+	var uid = Math.random().toString(36);
+	socket.emit('uid', uid);
+
+
 	socket.on('snakeNew', name => {
 
 		let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 		let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
-		let snake = b.newSnake(long, lat, name);
+
+		var id = Math.random();
+
+		let snake = b.newSnake(long, lat, name, uid);
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
 	});

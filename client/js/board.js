@@ -29,9 +29,9 @@ export default class Board extends EventEmitter{
 		this.clientLocalSnake = undefined;
 	}
 
-	newSnake(x, y, name) {
+	newSnake(x, y, name, id) {
 		if(this.snakes.length < 10){
-			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name);
+			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name, id);
 			
 			snake.draw();
 
@@ -40,7 +40,7 @@ export default class Board extends EventEmitter{
 			if (this.scoreboard !== undefined){
 				this.scoreboard.updateScores(this.snakes);
 			}
-			
+
 			return snake;
 			
 		} else {
