@@ -1,6 +1,6 @@
 "use strict";
 import io from 'socket.io-client';
-var socket = io();
+var socket = io(); // la connection au serveur a lieu ici
 var ee = require('event-emitter');
 
 var clientId;
@@ -21,8 +21,12 @@ var serverObject = ee({
 		console.log('sendToServer');
 		socket.emit('snakeNew', name);
 	},
-	changeDirection(name, direction) {
-		socket.emit('changeDirection', {name: name, direction: direction});
+	sendUid(uid){
+		console.log('sendToServer');
+		socket.emit('uid', uid);
+	},
+	changeDirection(id, direction) {
+		socket.emit('changeDirection', {id: id, direction: direction});
 	}
 });
 
@@ -36,10 +40,6 @@ socket.on('end', function(){
 	serverObject.emit('end');
 });
 
-socket.on('client ID', function(id){
-	clientId = id;
-});
-
 socket.on('connect message', function() {
 	console.log('connection');
 	serverObject.emit('connection');
@@ -51,6 +51,11 @@ socket.on('disconnect', function() {
 
 socket.on('new_apple', function(data) {
 	serverObject.emit('new_apple', data);
+});
+
+socket.on('uid', function(data) {
+	serverObject.emit('uid', data);
+	console.log('stS uid', data)
 });
 
 socket.on('joinGame', function(apples) {
@@ -73,6 +78,7 @@ socket.on('snakeMove', function(data) {
 
 socket.on('setDirection', data => {
 	serverObject.emit('setDirection', data);
+	console.log('setdir', data);
 });
 
 window.addEventListener('offline', function() {
