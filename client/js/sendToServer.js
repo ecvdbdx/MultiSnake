@@ -8,9 +8,6 @@ var clientId;
 // Envoi vers le serveur
 
 var serverObject = ee({
-	sendNewUser(name){
-		socket.emit('newPlayer', name);
-	},
 	sendDeleteUser(){
 		socket.emit('disconnect', 'Un utilisateur s\'est déconnecté');
 	},
@@ -44,6 +41,7 @@ socket.on('end', function(){
 });
 
 socket.on('connect message', function() {
+	console.log('connection');
 	serverObject.emit('connection');
 });
 
