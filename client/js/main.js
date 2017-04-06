@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				console.log(uid);
 
 				server.on('new_snake', function(data){
-					if (uid != data.id){
+					if (uid !== data.id){
 						clientLocaleSnake = board.newSnake(data.x, data.y, data.name, data.id);
 					}
 					console.log('newsnake', uid, data.id);

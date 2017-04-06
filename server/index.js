@@ -54,8 +54,6 @@ io.on('connection', function(socket) {
 		let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 		let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
 
-		var id = Math.random();
-
 		let snake = b.newSnake(long, lat, name, uid);
 		console.log("snake : " + snake.name);
 		io.emit('new_snake', snake);
