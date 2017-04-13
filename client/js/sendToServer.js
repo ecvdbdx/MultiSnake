@@ -71,6 +71,10 @@ socket.on('new_snake', function(data) {
 	serverObject.emit('new_snake', data);
 });
 
+socket.on('snakes', function(data) {
+	serverObject.emit('snakes', data);
+});
+
 socket.on('snakeMove', function(data) {
 	console.log('sendto');
 	serverObject.emit('new_snake_position', data);

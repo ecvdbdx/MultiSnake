@@ -53,12 +53,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				console.log(uid);
 
+				/*
 				server.on('new_snake', function(data){
 					if (uid !== data.id){
 						board.newSnake(data.x, data.y, data.name, data.id);
 					}
 					console.log('newsnake', uid, data.id);
-				});	
+				});
+*/
+
+				server.on('snakes', function(snakes){
+					snakes.forEach(data => {
+						if (data.id !== uid) {
+							board.newSnake(data.x, data.y, data.name, data.id);
+						}
+					});
+				});
 
 				//Faut rajouter un
 
@@ -66,8 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
 					board.snakes.forEach(snake => {
 						if (snake.id === uid) {
 							snake.direction = data.direction;
+							console.log('setdirection', snake.id, data.id, uid);
 						}
-						console.log('setdirection', snake.id, data.id, uid);
+						
 					});
 				});
 
