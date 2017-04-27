@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
 			let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
 
-			let clientLocaleSnake = board.newSnake(long, lat, name, uid);
+			const clientLocaleSnake = board.newSnake(long, lat, name, uid);
 
 			board.clientLocalSnake = clientLocaleSnake;
 
@@ -53,20 +53,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				console.log(uid);
 
-				server.on('new_snake', function(data){
-					if (uid !== data.id){
-						clientLocaleSnake = board.newSnake(data.x, data.y, data.name, data.id);
-
-					}
-					console.log('newsnake', uid, data.id);
-				});	
+				//Problème ici avec les snakes qui se dupliquent
+				//faire 2 foreach
+				server.on('snakes', function(snakes){
+					snakes.forEach(data => {
+						if (data.id !== uid) {
+							board.newSnake(data.x, data.y, data.name, data.id);
+						}
+					});
+				});
 
 				server.on('setDirection', function(data) {
 					board.snakes.forEach(snake => {
-						if (snake.id === data.id) {
+						if (snake.id === uid) {
 							snake.direction = data.direction;
+							console.log('setdirection', snake.id, data.id, uid);
 						}
-						console.log('setdirection', snake.id, data.id);
+						
 					});
 				});
 

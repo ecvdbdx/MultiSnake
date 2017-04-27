@@ -56,7 +56,8 @@ io.on('connection', function(socket) {
 
 		let snake = b.newSnake(long, lat, name, uid);
 		console.log("snake : " + snake.name);
-		io.emit('new_snake', snake);
+		io.emit('snakes', b.snakes);
+		console.log("All Snakes", b.snakes);
 
 		if(inProgressGame){
 			io.emit('joinGame', b.apples);
