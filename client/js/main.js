@@ -53,15 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				console.log(uid);
 
-				/*
-				server.on('new_snake', function(data){
-					if (uid !== data.id){
-						board.newSnake(data.x, data.y, data.name, data.id);
-					}
-					console.log('newsnake', uid, data.id);
-				});
-*/
-
+				//Problème ici avec les snakes qui se dupliquent
+				//faire 2 foreach
 				server.on('snakes', function(snakes){
 					snakes.forEach(data => {
 						if (data.id !== uid) {
@@ -69,8 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 						}
 					});
 				});
-
-				//Faut rajouter un
 
 				server.on('setDirection', function(data) {
 					board.snakes.forEach(snake => {
