@@ -29,10 +29,10 @@ export default class Board extends EventEmitter{
 		this.clientLocalSnake = undefined;
 	}
 
-	newSnake(x, y, name, id) {
+	newSnake(x, y, name, id, position) {
 		if(this.snakes.length < 10){
 
-			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name, id);
+			let snake = new Snake(this.context, x, y, this.getAvailableColor(), name, id, position);
 			
 			snake.draw();
 

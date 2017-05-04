@@ -5,13 +5,13 @@ import * as constant from './constant';
 
 export default class Snake {
 
-	constructor(context, x, y, color, name, id) {
+	constructor(context, x, y, color, name, id, direction) {
 		this.context = context;
 		this.x = x;
 		this.y = y;
 		this.score = 0;
         // TEMP: SET THE START DIRECTION TO RIGHT FOR TEST PURPOSES
-		this.direction = 'right';
+		this.direction = direction;
         // END TEMP
 		this.color = color;
 		this.width = constant.SNAKE_WIDTH;

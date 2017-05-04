@@ -49,12 +49,12 @@ io.on('connection', function(socket) {
 	socket.emit('uid', uid);
 
 
-	socket.on('snakeNew', name => {
+	socket.on('snakeNew', snakeuser => {
 
-		let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
-		let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
+		//let long = Math.floor(Math.random() * (constant.CANVAS_WIDTH/constant.GRID_SIZE)) * constant.GRID_SIZE;
+		//let lat = Math.floor(Math.random() * (constant.CANVAS_HEIGHT/constant.GRID_SIZE)) * constant.GRID_SIZE;
 
-		let snake = b.newSnake(long, lat, name, uid);
+		let snake = b.newSnake(snakeuser.long, snakeuser.lat, snakeuser.name, snakeuser.uid, snakeuser.direction);
 		console.log("snake : " + snake.name);
 		io.emit('snakes', b.snakes);
 		console.log("All Snakes", b.snakes);
